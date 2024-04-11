@@ -1,0 +1,77 @@
+version: "3"
+
+networks:
+    app-network:
+        driver: bridge
+
+services:
+    nginx:
+        image: nginx:stable-alpine
+        container_name: ${APP_NAME:-project}-nginx
+        restart: unless-stopped
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d
+            - ./storage/logs/nginx:/var/log/nginx/
+        ports:
+            - 8089:80
+        depends_on:
+            - app
+        environment:
+            TZ: ${DOCKER_WORKSPACE_TIMEZONE:-UTC}
+        networks:
+            - app-network
+
+    app:
+        image: app:php8.2-fpm-PhpRedis
+        container_name: ${APP_NAME:-project}-app
+        hostname: app-service
+        build:
+          args:
+            USER_ID: 1000
+            GROUP_ID: 1000
+          context: ./docker/php
+          dockerfile: Dockerfile
+        restart: unless-stopped
+        environment:
+            PHP_IDE_CONFIG: "serverName=Docker"
+        extra_hosts:
+            - host.docker.internal:host-gateway
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - mysql
+            - redis
+        networks:
+            - app-network
+
+    mysql:
+        image: mariadb:11.3
+        container_name: ${APP_NAME:-project}-mariadb
+        restart: always
+        volumes:
+            - ./docker-volumes/mysql:/var/lib/mysql
+        ports:
+            - "3307:3306"
+        environment:
+            MARIADB_DATABASE: ${DB_DATABASE}
+            MARIADB_USER: ${DB_USERNAME}
+            MARIADB_PASSWORD: ${DB_PASSWORD}
+            MARIADB_ROOT_PASSWORD: admin
+        networks:
+            - app-network
+
+    redis:
+        image: redis:7.2
+        container_name: ${APP_NAME:-project}-redis
+        restart: unless-stopped
+        ports:
+            - "6380:6379"
+        volumes:
+            - /docker-volumes/redis/data:/data
+        healthcheck:
+            test: [ "CMD", "redis-cli", "ping" ]
+            retries: 3
+            timeout: 5s
+        networks:
+            - app-network
