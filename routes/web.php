@@ -18,4 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', TestController::class);
+Route::get('/test', [TestController::class, 'test']);
+Route::get('/auto/{car}', [TestController::class, 'show']);

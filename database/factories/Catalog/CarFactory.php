@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Catalog;
 
-use App\Models\Catalog\CarColor;
+use App\Models\Catalog\Color;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +18,7 @@ class CarFactory extends Factory
     public function definition(): array
     {
         return [
-            'car_color_id' => CarColor::query()->inRandomOrder()->first()->id,
+            'color_id' => Color::query()->inRandomOrder()->first()->id,
             'year' => fake()->year,
             'vin' => fake()->postcode(),
             'price' => fake()->randomNumber(5),

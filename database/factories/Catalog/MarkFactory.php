@@ -5,9 +5,9 @@ namespace Database\Factories\Catalog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Catalog\CarColor>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Catalog\Mark>
  */
-class CarColorFactory extends Factory
+class MarkFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,7 @@ class CarColorFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->colorName,
-            'code' => fake()->randomNumber(5, true)
+            'name' => 'Модель № ' . fake()->randomNumber(3)
         ];
     }
 }

@@ -2,16 +2,16 @@
 
 namespace Database\Factories\Catalog;
 
-use App\Models\Catalog\CarBodyType;
-use App\Models\Catalog\CarDrive;
-use App\Models\Catalog\CarEngine;
-use App\Models\Catalog\CarTransmission;
+use App\Models\Catalog\BodyType;
+use App\Models\Catalog\Drive;
+use App\Models\Catalog\Engine;
+use App\Models\Catalog\Transmission;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Catalog\CarComplectation>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Catalog\Complectation>
  */
-class CarComplectationFactory extends Factory
+class ComplectationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -29,10 +29,10 @@ class CarComplectationFactory extends Factory
         ];
 
         return [
-            'car_transmission_id' => CarTransmission::query()->inRandomOrder()->first()->id,
-            'car_body_type_id' => CarBodyType::query()->inRandomOrder()->first()->id,
-            'car_engine_id' => CarEngine::query()->inRandomOrder()->first()->id,
-            'car_drive_id' => CarDrive::query()->inRandomOrder()->first()->id,
+            'transmission_id' => Transmission::query()->inRandomOrder()->first()->id,
+            'body_type_id' => BodyType::query()->inRandomOrder()->first()->id,
+            'engine_id' => Engine::query()->inRandomOrder()->first()->id,
+            'drive_id' => Drive::query()->inRandomOrder()->first()->id,
             'name' => $name[array_rand($name)],
             'volume_engine' => fake()->randomNumber(3, true),
             'power' => fake()->randomNumber(3, true),

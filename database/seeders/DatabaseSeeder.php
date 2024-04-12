@@ -4,21 +4,18 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Catalog\Car;
-use App\Models\Catalog\CarBodyType;
-use App\Models\Catalog\CarColor;
-use App\Models\Catalog\CarComplectation;
-use App\Models\Catalog\CarCountry;
-use App\Models\Catalog\CarModel;
-use App\Models\Catalog\CarVendor;
-use Database\Seeders\Catalog\CarBodySeeder;
-use Database\Seeders\Catalog\CarDriveSeeder;
-use Database\Seeders\Catalog\CarEngineSeeder;
-use Database\Seeders\Catalog\CarRealAttributeSeeder;
-use Database\Seeders\Catalog\CarRealVolumeSeeder;
-use Database\Seeders\Catalog\CarTransmissionSeeder;
-use Illuminate\Database\Eloquent\Factories\Sequence;
+use App\Models\Catalog\Color;
+use App\Models\Catalog\Complectation;
+use App\Models\Catalog\Country;
+use App\Models\Catalog\Mark;
+use App\Models\Catalog\Vendor;
+use Database\Seeders\Catalog\BodySeeder;
+use Database\Seeders\Catalog\DriveSeeder;
+use Database\Seeders\Catalog\EngineSeeder;
+use Database\Seeders\Catalog\RealAttributeSeeder;
+use Database\Seeders\Catalog\RealVolumeSeeder;
+use Database\Seeders\Catalog\TransmissionSeeder;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\App;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,34 +25,34 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            CarTransmissionSeeder::class,
-            CarBodySeeder::class,
-            CarEngineSeeder::class,
-            CarDriveSeeder::class,
-            CarRealAttributeSeeder::class
+            TransmissionSeeder::class,
+            BodySeeder::class,
+            EngineSeeder::class,
+            DriveSeeder::class,
+            RealAttributeSeeder::class
         ]);
 
-        CarColor::factory()->count(20)->create();
+        Color::factory()->count(20)->create();
 
-        CarCountry::factory()
+        Country::factory()
             ->has(
-                CarVendor::factory()
+                Vendor::factory()
                     ->count(3)
                     ->has(
-                        CarModel::factory()
+                        Mark::factory()
                             ->count(3)
                             ->has(
-                                CarComplectation::factory()
+                                Complectation::factory()
                                     ->count(3)
                                     ->has(Car::factory(), 'cars'),
                                 'complectations'
                             ),
-                        'models'
+                        'marks'
                     )
                 , 'vendors'
             )
             ->create();
 
-        $this->call([CarRealVolumeSeeder::class]);
+        $this->call([RealVolumeSeeder::class]);
     }
 }

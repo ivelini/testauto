@@ -2,12 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Resources\Catalog\CarResource;
+use App\Models\Catalog\Car;
 
 class TestController extends Controller
 {
-    public function __invoke()
+    public function test()
     {
-        dd(__METHOD__);
+        $car = Car::query()
+            ->inRandomOrder()
+            ->with(['color', 'complectation'])
+            ->first();
+
+        dd(
+            $car,
+        );
+    }
+
+    public function show(Car $car)
+    {
+        return CarResource::make($car->load('color', 'complectation'));
     }
 }

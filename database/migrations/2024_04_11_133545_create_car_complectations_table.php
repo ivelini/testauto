@@ -1,10 +1,10 @@
 <?php
 
-use App\Models\Catalog\CarBodyType;
-use App\Models\Catalog\CarDrive;
-use App\Models\Catalog\CarEngine;
-use App\Models\Catalog\CarModel;
-use App\Models\Catalog\CarTransmission;
+use App\Models\Catalog\BodyType;
+use App\Models\Catalog\Drive;
+use App\Models\Catalog\Engine;
+use App\Models\Catalog\Mark;
+use App\Models\Catalog\Transmission;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,15 +16,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('car_complectations', function (Blueprint $table) {
+        Schema::create('complectations', function (Blueprint $table) {
             $table->id();
             $table->comment('Заводская комплектация');
 
-            $table->foreignIdFor(CarModel::class)->constrained()->onDelete('cascade');
-            $table->foreignIdFor(CarTransmission::class)->constrained()->onDelete('cascade');
-            $table->foreignIdFor(CarBodyType::class)->constrained()->onDelete('cascade');
-            $table->foreignIdFor(CarDrive::class)->constrained()->onDelete('cascade');
-            $table->foreignIdFor(CarEngine::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Mark::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Transmission::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(BodyType::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Drive::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Engine::class)->constrained()->onDelete('cascade');
 
             $table->string('name');
             $table->integer('volume_engine');
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('car_complectations');
+        Schema::dropIfExists('complectations');
     }
 };

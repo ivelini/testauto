@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- *  Car engine
+ *  Страна производителя
  *
  * @property integer $id
- *
  * @property string $name
  *
- * @property Collection $complectations
+ * @property Collection $vendors
+ *
  */
-class CarEngine extends Model
+class Country extends Model
 {
     use HasFactory;
 
@@ -26,11 +26,11 @@ class CarEngine extends Model
     ];
 
     /**
-     * All complectations for car engine
+     * All vendors for country
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function complectations()
+    public function vendors()
     {
-        return $this->hasMany(CarComplectation::class);
+        return $this->hasMany(Vendor::class);
     }
 }

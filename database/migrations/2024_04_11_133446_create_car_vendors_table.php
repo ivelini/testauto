@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Catalog\CarCountry;
+use App\Models\Catalog\Country;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,10 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('car_vendors', function (Blueprint $table) {
+        Schema::create('vendors', function (Blueprint $table) {
             $table->id();
             $table->comment('Производитель');
-            $table->foreignIdFor(CarCountry::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Country::class)->constrained()->onDelete('cascade');
             $table->string('name');
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('car_vendors');
+        Schema::dropIfExists('vendors');
     }
 };

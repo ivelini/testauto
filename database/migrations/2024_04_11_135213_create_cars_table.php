@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Catalog\CarColor;
-use App\Models\Catalog\CarComplectation;
+use App\Models\Catalog\Color;
+use App\Models\Catalog\Complectation;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
             $table->comment('Автомобиль');
-            $table->foreignIdFor(CarComplectation::class)->constrained()->onDelete('cascade');
-            $table->foreignIdFor(CarColor::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Complectation::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Color::class)->constrained()->onDelete('cascade');
             $table->integer('year');
             $table->integer('vin');
             $table->integer('price');

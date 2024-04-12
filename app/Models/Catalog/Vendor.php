@@ -13,16 +13,16 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property string $name
  *
- * @property CarCountry $country
+ * @property Country $country
  */
-class CarVendor extends Model
+class Vendor extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
 
     protected $fillable = [
-        'car_country_id',
+        'country_id',
         'name'
     ];
 
@@ -32,11 +32,11 @@ class CarVendor extends Model
      */
     public function country()
     {
-        return $this->belongsTo(CarCountry::class, 'car_country_id');
+        return $this->belongsTo(Country::class);
     }
 
-    public function models()
+    public function marks()
     {
-        return $this->hasMany(CarModel::class);
+        return $this->hasMany(Mark::class);
     }
 }

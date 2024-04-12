@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('car_real_complect_attributes', function (Blueprint $table) {
+        Schema::create('real_complect_attributes', function (Blueprint $table) {
             $table->id();
             $table->comment('Аттрибут реальной комплектации');
             $table->string('name');
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('car_real_complect_attributes');
+        Schema::dropIfExists('real_complect_attributes');
     }
 };

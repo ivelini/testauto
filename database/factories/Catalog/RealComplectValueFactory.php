@@ -5,9 +5,9 @@ namespace Database\Factories\Catalog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Catalog\CarRealComplectAttribute>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Catalog\RealComplectAttribute>
  */
-class CarRealComplectVolumeFactory extends Factory
+class RealComplectValueFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,8 @@ class CarRealComplectVolumeFactory extends Factory
     public function definition(): array
     {
         return [
-            'volue_text' => fake()->words(2, true),
-            'volue_boolean' => rand(0,1),
+            'value_text' => fake()->words(2, true),
+            'value_boolean' => rand(0,1),
         ];
     }
 }

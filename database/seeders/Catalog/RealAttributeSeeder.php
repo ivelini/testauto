@@ -2,10 +2,10 @@
 
 namespace Database\Seeders\Catalog;
 
-use App\Models\Catalog\CarRealComplectAttribute;
+use App\Models\Catalog\RealComplectAttribute;
 use Illuminate\Database\Seeder;
 
-class CarRealAttributeSeeder extends Seeder
+class RealAttributeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -26,8 +26,8 @@ class CarRealAttributeSeeder extends Seeder
             'Комплектность',
         ];
 
-        if(CarRealComplectAttribute::query()->count() == 0) {
-            CarRealComplectAttribute::insert(array_map(fn ($name) => ['name' => $name], $values));
+        if(RealComplectAttribute::query()->count() == 0) {
+            RealComplectAttribute::insert(array_map(fn ($name) => ['name' => $name], $values));
         }
     }
 }

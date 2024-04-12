@@ -6,23 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Model auto
+ * Mark auto
  *
  * @property integer $id
  * @property integer $vendor_id
  *
  * @property string $name
  *
- * @property CarVendor $vendor
+ * @property Vendor $vendor
  */
-class CarModel extends Model
+class Mark extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
 
     protected $fillable = [
-        'car_vendor_id',
+        'vendor_id',
         'name'
     ];
 
@@ -32,7 +32,7 @@ class CarModel extends Model
      */
     public function vendor()
     {
-        return $this->belongsTo(CarVendor::class, 'car_vendor_id');
+        return $this->belongsTo(Vendor::class, 'vendor_id');
     }
 
     /**
@@ -41,7 +41,7 @@ class CarModel extends Model
      */
     public function complectations()
     {
-        return $this->hasMany(CarComplectation::class);
+        return $this->hasMany(Complectation::class);
     }
 
     /**
@@ -50,6 +50,6 @@ class CarModel extends Model
      */
     public function cars()
     {
-        return $this->hasManyThrough(Car::class, CarComplectation::class);
+        return $this->hasManyThrough(Car::class, Complectation::class);
     }
 }

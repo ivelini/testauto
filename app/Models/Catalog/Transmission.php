@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Collection $complectations
  */
-class CarTransmission extends Model
+class Transmission extends Model
 {
     use HasFactory;
 
@@ -31,6 +31,6 @@ class CarTransmission extends Model
      */
     public function complectations()
     {
-        return $this->hasMany(CarComplectation::class);
+        return $this->hasMany(Complectation::class);
     }
 }

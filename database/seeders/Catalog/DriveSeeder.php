@@ -2,19 +2,19 @@
 
 namespace Database\Seeders\Catalog;
 
-use App\Models\Catalog\CarDrive;
+use App\Models\Catalog\Drive;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CarDriveSeeder extends Seeder
+class DriveSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        if(CarDrive::query()->count() == 0) {
-            CarDrive::insert([
+        if(Drive::query()->count() == 0) {
+            Drive::insert([
                 ['name' => 'Передний'],
                 ['name' => 'Задний'],
                 ['name' => 'Полный'],

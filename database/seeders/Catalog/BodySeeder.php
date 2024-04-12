@@ -2,19 +2,19 @@
 
 namespace Database\Seeders\Catalog;
 
-use App\Models\Catalog\CarBodyType;
+use App\Models\Catalog\BodyType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CarBodySeeder extends Seeder
+class BodySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        if(CarBodyType::query()->count() == 0) {
-            CarBodyType::insert([
+        if(BodyType::query()->count() == 0) {
+            BodyType::insert([
                 ['name' => 'Внедерожник'],
                 ['name' => 'Седан'],
                 ['name' => 'Лифтбэк'],

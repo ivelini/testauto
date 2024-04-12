@@ -11,35 +11,35 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property integer $id
  *
- * @property integer $car_model_id
- * @property integer $car_transmission_id
- * @property integer $car_body_type_id
- * @property integer $car_engine_id
+ * @property integer $model_id
+ * @property integer $transmission_id
+ * @property integer $body_type_id
+ * @property integer $engine_id
  *
  * @property string $name
  * @property integer $volume_engine
  * @property integer $power
  * @property integer $speed
  *
- * @property CarModel $model
- * @property CarTransmission $transmission
- * @property CarDrive $drive
- * @property CarEngine $engine
- * @property CarBodyType $bodyType
+ * @property Mark $model
+ * @property Transmission $transmission
+ * @property Drive $drive
+ * @property Engine $engine
+ * @property BodyType $bodyType
  *
  */
-class CarComplectation extends Model
+class Complectation extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
 
     protected $fillable = [
-        'car_model_id',
-        'car_transmission_id',
-        'car_body_type_id',
-        'car_drive_id',
-        'car_engine_id',
+        'model_id',
+        'transmission_id',
+        'body_type_id',
+        'drive_id',
+        'engine_id',
         'name',
         'volume_engine',
         'power',
@@ -47,12 +47,12 @@ class CarComplectation extends Model
     ];
 
     /**
-     * Model for current complectation
+     * Mark for current complectation
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function model()
+    public function mark()
     {
-        return $this->belongsTo(CarModel::class);
+        return $this->belongsTo(Mark::class);
     }
 
     /**
@@ -61,7 +61,7 @@ class CarComplectation extends Model
      */
     public function transmission()
     {
-        return $this->belongsTo(CarTransmission::class);
+        return $this->belongsTo(Transmission::class);
     }
 
     /**
@@ -70,7 +70,7 @@ class CarComplectation extends Model
      */
     public function bodyType()
     {
-        return $this->belongsTo(CarBodyType::class);
+        return $this->belongsTo(BodyType::class);
     }
 
     /**
@@ -79,7 +79,7 @@ class CarComplectation extends Model
      */
     public function drive()
     {
-        return $this->belongsTo(CarDrive::class);
+        return $this->belongsTo(Drive::class);
     }
 
     /**
@@ -88,7 +88,7 @@ class CarComplectation extends Model
      */
     public function engine()
     {
-        return $this->belongsTo(CarEngine::class);
+        return $this->belongsTo(Engine::class);
     }
 
     /**

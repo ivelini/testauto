@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- *  Car body type
+ *  Car drive
  *
  * @property integer $id
  *
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Collection $complectations
  */
-class CarBodyType extends Model
+class Drive extends Model
 {
     use HasFactory;
 
@@ -26,11 +26,11 @@ class CarBodyType extends Model
     ];
 
     /**
-     * All complectations for body type
+     * All complectations for car drive
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function complectations()
     {
-        return $this->hasMany(CarComplectation::class);
+        return $this->hasMany(Complectation::class);
     }
 }
