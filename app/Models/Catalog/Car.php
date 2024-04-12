@@ -24,12 +24,12 @@ class Car extends Model
 
     public function complectation()
     {
-        return $this->belongsTo(CarComplectation::class);
+        return $this->belongsTo(CarComplectation::class, 'car_complectation_id');
     }
 
     public function color()
     {
-        return $this->belongsTo(CarColor::class);
+        return $this->belongsTo(CarColor::class, 'car_color_id');
     }
 
     public function getModelAttribute()

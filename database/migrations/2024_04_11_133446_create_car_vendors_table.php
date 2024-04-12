@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Catalog\CarContry;
+use App\Models\Catalog\CarCountry;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('car_vendors', function (Blueprint $table) {
             $table->id();
             $table->comment('Производитель');
-            $table->foreignIdFor(CarContry::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(CarCountry::class)->constrained()->onDelete('cascade');
             $table->string('name');
         });
     }

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->comment('Модель авто');
             $table->foreignIdFor(CarVendor::class)->constrained()->onDelete('cascade');
             $table->string('name');
+
+            $table->unique(['car_vendor_id', 'name']);
         });
     }
 

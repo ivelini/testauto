@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection $vendors
  *
  */
-class CarContry extends Model
+class CarCountry extends Model
 {
     use HasFactory;
 
@@ -31,6 +31,6 @@ class CarContry extends Model
      */
     public function vendors()
     {
-        return $this->hasMany(CarVendor::class);
+        return $this->hasMany(CarVendor::class, 'car_country_id');
     }
 }

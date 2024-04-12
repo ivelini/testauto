@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property string $name
  *
- * @property CarContry $country
+ * @property CarCountry $country
  */
 class CarVendor extends Model
 {
@@ -22,7 +22,7 @@ class CarVendor extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'country_id',
+        'car_country_id',
         'name'
     ];
 
@@ -30,8 +30,13 @@ class CarVendor extends Model
      * Country for vendor
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function contry()
+    public function country()
     {
-        return $this->belongsTo(CarContry::class);
+        return $this->belongsTo(CarCountry::class, 'car_country_id');
+    }
+
+    public function models()
+    {
+        return $this->hasMany(CarModel::class);
     }
 }

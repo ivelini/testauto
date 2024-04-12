@@ -22,7 +22,7 @@ class CarModel extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'vendor_id',
+        'car_vendor_id',
         'name'
     ];
 
@@ -32,7 +32,7 @@ class CarModel extends Model
      */
     public function vendor()
     {
-        return $this->belongsTo(CarVendor::class);
+        return $this->belongsTo(CarVendor::class, 'car_vendor_id');
     }
 
     /**
