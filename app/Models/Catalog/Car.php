@@ -2,13 +2,13 @@
 
 namespace App\Models\Catalog;
 
+use App\Models\Catalog\Traits\Cache\CacheTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 /**
  *  Car
@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\DB;
 class Car extends Model
 {
     use HasFactory;
+    use CacheTrait;
 
     protected $fillable = [
         'complectation_id',
