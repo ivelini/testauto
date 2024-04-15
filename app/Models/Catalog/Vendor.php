@@ -4,6 +4,8 @@ namespace App\Models\Catalog;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  *  Vendor
@@ -28,14 +30,16 @@ class Vendor extends Model
 
     /**
      * Country for vendor
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function country()
+    public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
     }
 
-    public function marks()
+    /**
+     *
+     */
+    public function marks(): HasMany
     {
         return $this->hasMany(Mark::class);
     }

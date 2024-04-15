@@ -5,6 +5,7 @@ namespace App\Models\Catalog;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  *  Car engine
@@ -27,9 +28,8 @@ class Engine extends Model
 
     /**
      * All complectations for car engine
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function complectations()
+    public function complectations(): HasMany
     {
         return $this->hasMany(Complectation::class);
     }

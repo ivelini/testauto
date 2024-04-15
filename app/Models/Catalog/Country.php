@@ -5,6 +5,7 @@ namespace App\Models\Catalog;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  *  Страна производителя
@@ -27,9 +28,8 @@ class Country extends Model
 
     /**
      * All vendors for country
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function vendors()
+    public function vendors(): HasMany
     {
         return $this->hasMany(Vendor::class);
     }

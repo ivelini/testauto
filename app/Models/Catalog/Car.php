@@ -5,7 +5,10 @@ namespace App\Models\Catalog;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 /**
  *  Car
@@ -39,23 +42,32 @@ class Car extends Model
         'price'
     ];
 
-    public function complectation()
+    /**
+     *
+     */
+    public function complectation(): BelongsTo
     {
         return $this->belongsTo(Complectation::class, 'complectation_id');
     }
 
-    public function realVolueComplectation()
+    /**
+     *
+     */
+    public function realValueComplectation(): HasMany
     {
         return $this->hasMany(RealComplectValue::class);
     }
 
-    public function color()
+    /**
+     *
+     */
+    public function color(): BelongsTo
     {
         return $this->belongsTo(Color::class, 'color_id');
     }
 
     /**
-     * @return Attribute
+     *
      */
     protected function mark(): Attribute
     {
@@ -63,7 +75,7 @@ class Car extends Model
     }
 
     /**
-     * @return Attribute
+     *
      */
     protected function vendor(): Attribute
     {
@@ -71,7 +83,7 @@ class Car extends Model
     }
 
     /**
-     * @return Attribute
+     *
      */
     protected function country(): Attribute
     {
@@ -84,10 +96,10 @@ class Car extends Model
      */
     protected function realComplectation(): Attribute
     {
-        $groupedRealComplectation = $this->realVolueComplectation()
+        $groupedRealComplectation = $this->realValueComplectation()
             ->with('attribute')
             ->get()
-            ->groupBy(fn($volumeComplectation) => $volumeComplectation->attribute->name);
+            ->groupBy(fn($valueComplectation) => $valueComplectation->attribute->name);
 
         return Attribute::get(fn() => $groupedRealComplectation);
     }

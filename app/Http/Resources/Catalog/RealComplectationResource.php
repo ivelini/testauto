@@ -19,8 +19,8 @@ class RealComplectationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return $this->map(
-            fn($valueCollections) => $valueCollections->map(
-                fn ($value) => RealComplectationValueResource::make($value)
+            fn($valuesCollection) => $valuesCollection->map(
+                fn ($valueModel) => $valueModel->value
             )
         )->toArray();
     }

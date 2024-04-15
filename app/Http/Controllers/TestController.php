@@ -21,6 +21,13 @@ class TestController extends Controller
 
     public function show(Car $car)
     {
-        return CarResource::make($car->load('color', 'complectation'));
+        return CarResource::make($car->load(
+            'color',
+            'complectation.mark',
+            'complectation.transmission',
+            'complectation.bodyType',
+            'complectation.drive',
+            'complectation.engine'
+        ));
     }
 }

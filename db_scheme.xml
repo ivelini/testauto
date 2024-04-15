@@ -77,7 +77,7 @@
         </key>
         <comment>Тип авто</comment>
     </table>
-    <table x="553" y="208" name="model">
+    <table x="553" y="208" name="marks">
         <row name="id" null="1" autoincrement="1">
             <datatype>INTEGER</datatype>
             <default>NULL</default></row>
@@ -97,9 +97,9 @@
         <row name="id" null="1" autoincrement="1">
             <datatype>INTEGER</datatype>
             <default>NULL</default></row>
-        <row name="model_id" null="0" autoincrement="0">
+        <row name="mark_id" null="0" autoincrement="0">
             <datatype>INTEGER</datatype>
-            <default>NULL</default><relation table="model" row="id" />
+            <default>NULL</default><relation table="marks" row="id" />
         </row>
         <row name="transmission_id" null="0" autoincrement="0">
             <datatype>INTEGER</datatype>
@@ -158,7 +158,7 @@
         </key>
         <comment>Привод автомобиля</comment>
     </table>
-    <table x="836" y="548" name="car">
+    <table x="838" y="558" name="car">
         <row name="id" null="1" autoincrement="1">
             <datatype>INTEGER</datatype>
             <default>NULL</default></row>
@@ -166,22 +166,19 @@
             <datatype>INTEGER</datatype>
             <default>NULL</default><relation table="complectations" row="id" />
         </row>
+        <row name="color_id" null="1" autoincrement="0">
+            <datatype>INTEGER</datatype>
+            <default>NULL</default><relation table="car_colors" row="id" />
+        </row>
         <row name="year" null="0" autoincrement="0">
             <datatype>INTEGER</datatype>
             <default>NULL</default></row>
         <row name="vin" null="0" autoincrement="0">
             <datatype>INTEGER</datatype>
             <default>NULL</default></row>
-        <row name="color" null="0" autoincrement="0">
-            <datatype>VARCHAR</datatype>
-            <default>'NULL'</default></row>
         <row name="price" null="0" autoincrement="0">
             <datatype>INTEGER</datatype>
             <default>NULL</default></row>
-        <row name="color_id" null="1" autoincrement="0">
-            <datatype>INTEGER</datatype>
-            <default>NULL</default><relation table="colors" row="id" />
-        </row>
         <key type="PRIMARY" name="">
             <part>id</part>
         </key>
@@ -199,7 +196,7 @@
         </key>
         <comment>Тип двигателя</comment>
     </table>
-    <table x="430" y="664" name="real_complect_attributes">
+    <table x="425" y="663" name="real_complect_attributes">
         <row name="id" null="1" autoincrement="1">
             <datatype>INTEGER</datatype>
             <default>NULL</default></row>
@@ -211,7 +208,7 @@
         </key>
         <comment>Аттрибуты для реальной комплектации</comment>
     </table>
-    <table x="615" y="739" name="real_complect_volumes">
+    <table x="614" y="697" name="car_real_complect_volumes">
         <row name="id" null="1" autoincrement="1">
             <datatype>INTEGER</datatype>
             <default>NULL</default></row>
@@ -219,7 +216,7 @@
             <datatype>INTEGER</datatype>
             <default>NULL</default><relation table="real_complect_attributes" row="id" />
         </row>
-        <row name="id" null="0" autoincrement="0">
+        <row name="car_id" null="0" autoincrement="0">
             <datatype>INTEGER</datatype>
             <default>NULL</default><relation table="car" row="id" />
         </row>
@@ -240,7 +237,7 @@
         </key>
         <comment>Значения для аттрибутов реальной комплектации</comment>
     </table>
-    <table x="704" y="573" name="colors">
+    <table x="704" y="573" name="car_colors">
         <row name="id" null="1" autoincrement="1">
             <datatype>INTEGER</datatype>
             <default>NULL</default></row>

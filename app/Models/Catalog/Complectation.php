@@ -5,6 +5,8 @@ namespace App\Models\Catalog;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Car complectation
@@ -35,7 +37,7 @@ class Complectation extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'model_id',
+        'mark_id',
         'transmission_id',
         'body_type_id',
         'drive_id',
@@ -48,54 +50,48 @@ class Complectation extends Model
 
     /**
      * Mark for current complectation
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function mark()
+    public function mark(): BelongsTo
     {
         return $this->belongsTo(Mark::class);
     }
 
     /**
      * Transmission for current complectation
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function transmission()
+    public function transmission(): BelongsTo
     {
         return $this->belongsTo(Transmission::class);
     }
 
     /**
      * Body type for current complectation
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function bodyType()
+    public function bodyType(): BelongsTo
     {
         return $this->belongsTo(BodyType::class);
     }
 
     /**
      * Drive for current complectation
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function drive()
+    public function drive(): BelongsTo
     {
         return $this->belongsTo(Drive::class);
     }
 
     /**
      * Engine for current complectation
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function engine()
+    public function engine(): BelongsTo
     {
         return $this->belongsTo(Engine::class);
     }
 
     /**
      * All cars for current complectation
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function cars()
+    public function cars(): HasMany
     {
         return $this->hasMany(Car::class);
     }

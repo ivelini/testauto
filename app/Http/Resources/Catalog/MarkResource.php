@@ -3,11 +3,12 @@
 namespace App\Http\Resources\Catalog;
 
 use App\Models\Catalog\Car;
+use App\Models\Catalog\Mark;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin Car
+ * @mixin Mark
  */
 class MarkResource extends JsonResource
 {
@@ -18,6 +19,9 @@ class MarkResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
     }
 }

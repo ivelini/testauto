@@ -5,6 +5,7 @@ namespace App\Models\Catalog;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -19,13 +20,16 @@ class RealComplectValue extends Model
         'volue_boolean',
     ];
 
-    public function attribute()
+    /**
+     *
+     */
+    public function attribute(): BelongsTo
     {
         return $this->belongsTo(RealComplectAttribute::class, 'real_complect_attribute_id');
     }
 
     /**
-     * @return ?Attribute
+     *
      */
     protected function value(): ?Attribute
     {

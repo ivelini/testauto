@@ -3,11 +3,12 @@
 namespace App\Http\Resources\Catalog;
 
 use App\Models\Catalog\Car;
+use App\Models\Catalog\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin Car
+ * @mixin Vendor
  */
 class VendorResource extends JsonResource
 {
@@ -18,6 +19,10 @@ class VendorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+
+        ];
     }
 }
