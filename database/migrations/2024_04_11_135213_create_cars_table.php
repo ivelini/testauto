@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(Complectation::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Color::class)->constrained()->onDelete('cascade');
             $table->integer('year');
-            $table->integer('vin');
+            $table->string('vin');
             $table->integer('price');
             $table->timestamps();
         });

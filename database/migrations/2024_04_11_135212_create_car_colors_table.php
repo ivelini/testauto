@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->comment('Цвет авто');
             $table->string('name');
-            $table->integer('code');
+            $table->integer('code')->nullable();
             $table->timestamps();
         });
     }
