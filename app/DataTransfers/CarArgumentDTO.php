@@ -11,13 +11,18 @@ class CarArgumentDTO
         public string $vendor,
         public string $mark,
         public string $complectation,
-        public string $color,
+        public ?string $color,
         public string $vin,
-        public string $price,
-        public string $year,
+        public ?string $price,
+        public ?string $year,
         public ?array $realComplectation,
+        public ?string $bodyType,
+        public ?string $engine,
+        public ?string $drive,
+        public ?string $transmission,
+        public ?string $volumeEngine,
+        public ?string $power,
+        public ?string $speed,
     )
-    {
-
-    }
+    {}
 }

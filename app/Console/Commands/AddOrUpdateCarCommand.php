@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Actions\Catalog\CarAddOrUpdate;
 use App\DataTransfers\CarArgumentDTO;
-use App\Services\ValidationService\ValidationCarAttribute;
+use App\Services\ValidationService\CarAttributes\ValidationCarAttribute;
 use Illuminate\Console\Command;
 
 
@@ -47,7 +47,13 @@ class AddOrUpdateCarCommand extends Command
             'price' => $price,
             'year' => $year,
             'real_complectation' => $realComplectation,
-
+            'body_type' => $bodyType,
+            'engine' => $engine,
+            'drive' => $drive,
+            'transmission' => $transmission,
+            'volume_engine' => $volumeEngine,
+            'power' => $power,
+            'speed' => $speed,
         ] = $validator->validated();
 
         $action = new CarAddOrUpdate(new CarArgumentDTO(
@@ -59,7 +65,14 @@ class AddOrUpdateCarCommand extends Command
             $vin,
             $price,
             $year,
-            $realComplectation
+            $realComplectation,
+            $bodyType,
+            $engine,
+            $drive,
+            $transmission,
+            $volumeEngine,
+            $power,
+            $speed,
         ));
 
         $action->run();

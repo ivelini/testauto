@@ -3,13 +3,18 @@
 namespace App\Actions\Catalog;
 
 use App\DataTransfers\CarArgumentDTO;
+use App\Models\Catalog\BodyType;
 use App\Models\Catalog\Car;
 use App\Models\Catalog\Color;
 use App\Models\Catalog\Complectation;
 use App\Models\Catalog\Country;
+use App\Models\Catalog\Drive;
+use App\Models\Catalog\Engine;
 use App\Models\Catalog\Mark;
+use App\Models\Catalog\Transmission;
 use App\Models\Catalog\Vendor;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CarAddOrUpdate
 {
@@ -41,7 +46,16 @@ class CarAddOrUpdate
 
                 $complectation = Complectation::firstOrCreate(
                     ['name' => $this->carArgumentDTO->complectation],
-                    ['mark_id' => $mark->id]
+                    $this->getOnlyNotEmptyFields([
+                        'mark_id' => $mark->id,
+                        'transmission_id' => Transmission::whereName($this->carArgumentDTO->transmission)->first()->id,
+                        'body_type_id' => BodyType::whereName($this->carArgumentDTO->bodyType)->first()->id,
+                        'drive_id' => Drive::whereName($this->carArgumentDTO->drive)->first()->id,
+                        'engine_id' => Engine::whereName($this->carArgumentDTO->engine)->first()->id,
+                        'volume_engine' => $this->carArgumentDTO->volumeEngine,
+                        'power' => $this->carArgumentDTO->power,
+                        'speed' => $this->carArgumentDTO->speed,
+                    ])
                 );
 
                 $color = Color::firstOrCreate(
@@ -50,18 +64,20 @@ class CarAddOrUpdate
 
                 $car = Car::updateOrCreate(
                     ['vin' => $this->carArgumentDTO->vin],
-                    [
+                    $this->getOnlyNotEmptyFields([
                         'complectation_id' => $complectation->id,
                         'color_id' => $color->id,
                         'price' => $this->carArgumentDTO->price,
                         'year' => $this->carArgumentDTO->year
-                    ]
+                    ])
                 );
 
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollBack();
             $this->status = 'Data saving error. Try later.';
+
+            Log::error('DB', [$e->getMessage()]);
         }
 
         if(isset($car) && $car->wasRecentlyCreated) {
@@ -69,5 +85,10 @@ class CarAddOrUpdate
         } elseif (isset($car) && ! $car->wasRecentlyCreated) {
             $this->status = 'The car has been changed in the catalog';
         }
+    }
+
+    private function getOnlyNotEmptyFields(array $attributes)
+    {
+        return array_filter($attributes, fn($value) => !empty($value));
     }
 }

@@ -23,7 +23,7 @@ abstract class ValidationService
 
             $this->validator = Validator::make($inputData, $this->getRules());
 
-            if($this->validator->fails()) {
+            if($this->validator->stopOnFirstFailure()->fails()) {
                 $this->errors = $this->validator->errors();
             } else {
                 $this->isValidated = true;
