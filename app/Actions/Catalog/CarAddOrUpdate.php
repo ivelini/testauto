@@ -11,6 +11,7 @@ use App\Models\Catalog\Country;
 use App\Models\Catalog\Drive;
 use App\Models\Catalog\Engine;
 use App\Models\Catalog\Mark;
+use App\Models\Catalog\RealComplectAttribute;
 use App\Models\Catalog\Transmission;
 use App\Models\Catalog\Vendor;
 use Illuminate\Support\Facades\DB;
@@ -62,6 +63,7 @@ class CarAddOrUpdate
                     ['name' => $this->carArgumentDTO->color]
                 );
 
+                /** @var Car $car */
                 $car = Car::updateOrCreate(
                     ['vin' => $this->carArgumentDTO->vin],
                     $this->getOnlyNotEmptyFields([
@@ -71,6 +73,23 @@ class CarAddOrUpdate
                         'year' => $this->carArgumentDTO->year
                     ])
                 );
+
+                $car->realComplectationValues()->delete();
+
+                if(! empty($this->carArgumentDTO->realComplectation)) {
+
+                    foreach($this->carArgumentDTO->realComplectation as $complectation) {
+
+                        $realComplectationAttribute = RealComplectAttribute::query()->where('name', $complectation['name'])->first();
+
+                        $car->realValuesComplectation()->createMany(
+                            array_map(fn($value) => [
+                                'real_complect_attribute_id' => $realComplectationAttribute->id,
+                                'value_text' => $value
+                            ], $complectation['values'])
+                        );
+                    }
+                }
 
             DB::commit();
         } catch (\Throwable $e) {

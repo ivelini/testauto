@@ -14,7 +14,7 @@ class CarObserver
     {
         $car->load([
             'color',
-            'complectation.mark',
+            'complectation.mark.vendor.country',
             'complectation.transmission',
             'complectation.bodyType',
             'complectation.drive',
@@ -30,7 +30,7 @@ class CarObserver
     {
         $car->load([
                 'color',
-                'complectation.mark',
+                'complectation.mark.vendor.country',
                 'complectation.transmission',
                 'complectation.bodyType',
                 'complectation.drive',

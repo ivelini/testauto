@@ -2,6 +2,7 @@
 
 namespace App\Models\Catalog;
 
+use App\Casts\Catalog\CarRealComplectation;
 use App\Models\Catalog\Traits\Cache\CacheTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,6 +30,7 @@ use Illuminate\Support\Collection;
  * @property Collection $real_complectation
  *
  *
+ *
  */
 class Car extends Model
 {
@@ -43,6 +45,14 @@ class Car extends Model
         'price'
     ];
 
+    protected $casts = [
+        'real_complectation' => CarRealComplectation::class,
+    ];
+
+    protected $touches = [
+        'realValuesComplectation'
+    ];
+
     /**
      *
      */
@@ -54,7 +64,7 @@ class Car extends Model
     /**
      *
      */
-    public function realValueComplectation(): HasMany
+    public function realValuesComplectation(): HasMany
     {
         return $this->hasMany(RealComplectValue::class);
     }
@@ -89,19 +99,5 @@ class Car extends Model
     protected function country(): Attribute
     {
         return Attribute::get(fn() => $this->complectation->mark->vendor->country);
-    }
-
-    /**
-     *
-     * @return Attribute
-     */
-    protected function realComplectation(): Attribute
-    {
-        $groupedRealComplectation = $this->realValueComplectation()
-            ->with('attribute')
-            ->get()
-            ->groupBy(fn($valueComplectation) => $valueComplectation->attribute->name);
-
-        return Attribute::get(fn() => $groupedRealComplectation);
     }
 }

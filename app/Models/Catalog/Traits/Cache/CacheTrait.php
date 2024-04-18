@@ -8,6 +8,10 @@ trait CacheTrait
 {
     public function setCache(CacheTypeEnum $cacheType): self
     {
+        if(count($this->getAppends()) > 0) {
+            array_map(fn($append) => $this->$append ,$this->getAppends());
+        }
+
         $key = (new \ReflectionClass($this))->getShortName() . ':' . $cacheType->name . ':' . $this->id;
         Cache::put($key, $this);
 

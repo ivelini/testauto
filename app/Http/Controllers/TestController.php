@@ -29,15 +29,15 @@ class TestController extends Controller
             'speed' => '210',
             'real_complectation' => [
                 [
-                    'type' => 'Противоугонная система',
+                    'name' => 'Противоугонная система',
                     'values' => ['А','Б','В','Г']
                 ],
                 [
-                    'type' => 'Комфорт',
+                    'name' => 'Комфорт',
                     'values' => ['А','Б','В','Г']
                 ],
                 [
-                    'type' => 'Салон и интерьер',
+                    'name' => 'Салон и интерьер',
                     'values' => ['А','Б','В','Г']
                 ]
             ]
@@ -46,16 +46,19 @@ class TestController extends Controller
 
     public function show($id)
     {
+        $car = Car::findOrFail($id);
+
         return CarResource::make(
             (new Car)->getCache(CacheTypeEnum::page, $id) ??
-            Car::findOrFail($id)->load(
-                'color',
-                'complectation.mark',
-                'complectation.transmission',
-                'complectation.bodyType',
-                'complectation.drive',
-                'complectation.engine'
-            )->setCache(CacheTypeEnum::page)
+            $car->append('real_complectation')
+                ->load(
+                    'color',
+                    'complectation.mark.vendor.country',
+                    'complectation.transmission',
+                    'complectation.bodyType',
+                    'complectation.drive',
+                    'complectation.engine'
+                )->setCache(CacheTypeEnum::page)
         );
     }
 }

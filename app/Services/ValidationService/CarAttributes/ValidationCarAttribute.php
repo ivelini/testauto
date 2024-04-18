@@ -77,7 +77,7 @@ class ValidationCarAttribute extends ValidationService
             'year' => array_merge($requiredCarField, ['integer']),
             'real_complectation' => 'nullable|array',
             'real_complectation.*' => 'required|array',
-            'real_complectation.*.type' => ['required','exists:real_complect_attributes,name'],
+            'real_complectation.*.name' => ['required','exists:real_complect_attributes,name'],
             'real_complectation.*.values' => 'required|array',
             'body_type' => new SingleComplectationRule('body_types'),
             'engine' => new SingleComplectationRule('engines'),

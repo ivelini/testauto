@@ -14,10 +14,12 @@ class RealComplectValue extends Model
     use HasFactory;
 
     protected $fillable = [
-        'volue_text',
-        'volue_int',
-        'volue_date',
-        'volue_boolean',
+        'real_complect_attribute_id',
+        'car_id',
+        'value_text',
+        'value_int',
+        'value_date',
+        'value_boolean',
     ];
 
     /**

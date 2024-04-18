@@ -12,16 +12,19 @@ class CarController extends Controller
 {
     public function show($id)
     {
+
         return CarResource::make(
             (new Car)->getCache(CacheTypeEnum::page, $id) ??
-            Car::findOrFail($id)->load(
-                'color',
-                'complectation.mark',
-                'complectation.transmission',
-                'complectation.bodyType',
-                'complectation.drive',
-                'complectation.engine'
-            )->setCache(CacheTypeEnum::page)
+            Car::findOrFail($id)
+                ->append('real_complectation')
+                ->load(
+                    'color',
+                    'complectation.mark.vendor.country',
+                    'complectation.transmission',
+                    'complectation.bodyType',
+                    'complectation.drive',
+                    'complectation.engine'
+                )->setCache(CacheTypeEnum::page)
         );
     }
 }
