@@ -2,7 +2,7 @@
 
 namespace App\Models\Catalog;
 
-use App\Casts\Catalog\CarRealComplectation;
+use App\Casts\Catalog\CarrealAttributes;
 use App\Models\Catalog\Traits\Cache\CacheTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  *  Car
@@ -27,7 +28,9 @@ use Illuminate\Support\Collection;
  * @property Mark $mark
  * @property Vendor $vendor
  * @property Country $country
- * @property Collection $real_complectation
+ * @property Collection $real_attributes
+ *
+ * @property ?BelongsToMany $realAttributes;
  *
  *
  *
@@ -45,14 +48,6 @@ class Car extends Model
         'price'
     ];
 
-    protected $casts = [
-        'real_complectation' => CarRealComplectation::class,
-    ];
-
-    protected $touches = [
-        'realValuesComplectation'
-    ];
-
     /**
      *
      */
@@ -61,12 +56,12 @@ class Car extends Model
         return $this->belongsTo(Complectation::class, 'complectation_id');
     }
 
-    /**
-     *
-     */
-    public function realValuesComplectation(): HasMany
+    public function realAttributes(): BelongsToMany
     {
-        return $this->hasMany(RealComplectValue::class);
+        return $this->belongsToMany(RealComplectAttribute::class, 'real_complect_values')
+            ->as('attribute_value')
+            ->using(RealComplectValue::class)
+            ->withPivot(['value']);
     }
 
     /**

@@ -12,6 +12,7 @@ use App\Models\Catalog\Drive;
 use App\Models\Catalog\Engine;
 use App\Models\Catalog\Mark;
 use App\Models\Catalog\RealComplectAttribute;
+use App\Models\Catalog\RealComplectValue;
 use App\Models\Catalog\Transmission;
 use App\Models\Catalog\Vendor;
 use Illuminate\Support\Facades\DB;
@@ -74,29 +75,34 @@ class CarAddOrUpdate
                     ])
                 );
 
-                $car->realComplectationValues()->delete();
+                RealComplectValue::query()->where('car_id', $car->id)->delete();
 
-                if(! empty($this->carArgumentDTO->realComplectation)) {
+                if(! empty($this->carArgumentDTO->realAttributes)) {
 
-                    foreach($this->carArgumentDTO->realComplectation as $complectation) {
+                    $insertValues = [];
+                    foreach($this->carArgumentDTO->realAttributes as $attribute) {
 
-                        $realComplectationAttribute = RealComplectAttribute::query()->where('name', $complectation['name'])->first();
+                        $attributeId = RealComplectAttribute::query()->where('name', $attribute['name'])->first()->id;
 
-                        $car->realValuesComplectation()->createMany(
-                            array_map(fn($value) => [
-                                'real_complect_attribute_id' => $realComplectationAttribute->id,
-                                'value_text' => $value
-                            ], $complectation['values'])
-                        );
+                        foreach($attribute['values'] as $value) {
+                            $insertValues[] = [
+                                'real_complect_attribute_id' => $attributeId,
+                                'car_id' => $car->id,
+                                'value' => $value
+                            ];
+                        }
                     }
+
+                    RealComplectValue::insert($insertValues);
                 }
 
+            $car->save();
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollBack();
             $this->status = 'Data saving error. Try later.';
 
-            Log::error('DB', [$e->getMessage()]);
+            Log::error('DB', [$e->getMessage(), $e->getTrace()]);
         }
 
         if(isset($car) && $car->wasRecentlyCreated) {

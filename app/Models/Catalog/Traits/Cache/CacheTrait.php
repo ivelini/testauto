@@ -13,6 +13,7 @@ trait CacheTrait
         }
 
         $key = (new \ReflectionClass($this))->getShortName() . ':' . $cacheType->name . ':' . $this->id;
+
         Cache::put($key, $this);
 
         return $this;

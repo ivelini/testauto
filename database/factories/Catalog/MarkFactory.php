@@ -17,7 +17,7 @@ class MarkFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'Модель № ' . fake()->randomNumber(3)
+            'name' => 'Модель ' . fake()->randomNumber(3)
         ];
     }
 }

@@ -15,7 +15,7 @@ class CarArgumentDTO
         public string $vin,
         public ?string $price,
         public ?string $year,
-        public ?array $realComplectation,
+        public ?array $realAttributes,
         public ?string $bodyType,
         public ?string $engine,
         public ?string $drive,

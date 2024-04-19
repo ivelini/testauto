@@ -27,7 +27,7 @@ class TestController extends Controller
             'volume_engine' => '1500',
             'power' => '3500',
             'speed' => '210',
-            'real_complectation' => [
+            'real_attributes' => [
                 [
                     'name' => 'Противоугонная система',
                     'values' => ['А','Б','В','Г']
@@ -50,14 +50,14 @@ class TestController extends Controller
 
         return CarResource::make(
             (new Car)->getCache(CacheTypeEnum::page, $id) ??
-            $car->append('real_complectation')
-                ->load(
+            $car->load(
                     'color',
                     'complectation.mark.vendor.country',
                     'complectation.transmission',
                     'complectation.bodyType',
                     'complectation.drive',
-                    'complectation.engine'
+                    'complectation.engine',
+                    'realAttributes'
                 )->setCache(CacheTypeEnum::page)
         );
     }

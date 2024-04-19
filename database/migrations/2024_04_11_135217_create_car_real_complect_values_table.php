@@ -18,10 +18,7 @@ return new class extends Migration
             $table->comment('Значение для аттрибута реальной комплектации');
             $table->foreignIdFor(RealComplectAttribute::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Car::class)->constrained()->onDelete('cascade');
-            $table->string('value_text')->nullable();
-            $table->integer('value_int')->nullable();
-            $table->date('value_date')->nullable();
-            $table->boolean('value_boolean')->nullable();
+            $table->string('value');
             $table->timestamps();
         });
     }

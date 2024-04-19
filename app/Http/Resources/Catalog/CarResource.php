@@ -18,7 +18,6 @@ class CarResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-//        dd($this);
         return [
             'id' => $this->id,
             'complectation' => ComplectationResource::make($this->whenLoaded('complectation')),
@@ -30,7 +29,9 @@ class CarResource extends JsonResource
             'year' => $this->year,
             'vin' => $this->vin,
             'price' => $this->price,
-            'real_complectation' => RealComplectationResource::make($this->real_complectation)
+            'real_attributes' => $this->realAttributes
+                ?->groupBy(fn($attribute) => $attribute->name)
+                ->map(fn($attributes) => $attributes->map(fn($attribute) => $attribute->attribute_value->value))
         ];
     }
 }

@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Cache;
 class CarObserver
 {
     /**
-     * Обработать событие «created» модели Car.
+     * Обработать событие «create/update» даже если нет изменений модели Car.
      */
-    public function created(Car $car): void
+    public function saved(Car $car): void
     {
         $car->load([
             'color',
@@ -18,25 +18,10 @@ class CarObserver
             'complectation.transmission',
             'complectation.bodyType',
             'complectation.drive',
-            'complectation.engine'
+            'complectation.engine',
+            'realAttributes'
         ])
             ->setCache(CacheTypeEnum::page);
-    }
-
-    /**
-     * Обработать событие «updated» модели Car.
-     */
-    public function updated(Car $car): void
-    {
-        $car->load([
-                'color',
-                'complectation.mark.vendor.country',
-                'complectation.transmission',
-                'complectation.bodyType',
-                'complectation.drive',
-                'complectation.engine'
-            ])
-        ->setCache(CacheTypeEnum::page);
     }
 
     /**

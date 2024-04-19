@@ -52,7 +52,5 @@ class DatabaseSeeder extends Seeder
                 , 'vendors'
             )
             ->create();
-
-        $this->call([RealVolumeSeeder::class]);
     }
 }

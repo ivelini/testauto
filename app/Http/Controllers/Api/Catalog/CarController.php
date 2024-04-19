@@ -16,7 +16,7 @@ class CarController extends Controller
         return CarResource::make(
             (new Car)->getCache(CacheTypeEnum::page, $id) ??
             Car::findOrFail($id)
-                ->append('real_complectation')
+                ->append('real_attributes')
                 ->load(
                     'color',
                     'complectation.mark.vendor.country',
