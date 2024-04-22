@@ -31,9 +31,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property Collection $real_attributes
  *
  * @property ?BelongsToMany $realAttributes;
- *
- *
- *
  */
 class Car extends Model
 {
@@ -49,13 +46,16 @@ class Car extends Model
     ];
 
     /**
-     *
+     * Complectation current car
      */
     public function complectation(): BelongsTo
     {
         return $this->belongsTo(Complectation::class, 'complectation_id');
     }
 
+    /**
+     * All real attributes current car
+     */
     public function realAttributes(): BelongsToMany
     {
         return $this->belongsToMany(RealComplectAttribute::class, 'real_complect_values')
@@ -65,7 +65,7 @@ class Car extends Model
     }
 
     /**
-     *
+     * Color vendor current car
      */
     public function color(): BelongsTo
     {
@@ -81,7 +81,7 @@ class Car extends Model
     }
 
     /**
-     *
+     * Attribute vendor current car
      */
     protected function vendor(): Attribute
     {
@@ -89,7 +89,7 @@ class Car extends Model
     }
 
     /**
-     *
+     *Attribute country current car
      */
     protected function country(): Attribute
     {

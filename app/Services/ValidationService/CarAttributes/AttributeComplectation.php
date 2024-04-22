@@ -4,6 +4,9 @@ namespace App\Services\ValidationService\CarAttributes;
 
 use App\Models\Catalog\Complectation;
 
+/**
+ * complectation attribute
+ */
 class AttributeComplectation extends AttributeBuilder
 {
 

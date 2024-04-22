@@ -11,9 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *  Car transmission
  *
  * @property integer $id
- *
  * @property string $name
- *
  * @property Collection $complectations
  */
 class Transmission extends Model
@@ -27,7 +25,7 @@ class Transmission extends Model
     ];
 
     /**
-     * All complectations for transmission
+     * All complectations current transmission
      */
     public function complectations(): HasMany
     {

@@ -1,20 +1,28 @@
 <?php
 
-namespace App\Services\ValidationService\CarAttributes;
+namespace App\Services\ValidationService;
 
 
 use App\Rules\Catalog\SingleComplectationRule;
-use App\Services\ValidationService\ValidationService;
+use App\Services\ValidationService\CarAttributes\AttributeComplectation;
+use App\Services\ValidationService\CarAttributes\AttributeCountry;
+use App\Services\ValidationService\CarAttributes\AttributeMark;
+use App\Services\ValidationService\CarAttributes\AttributeVendor;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Validation input attributs for Car
+ */
 class ValidationCarAttribute extends ValidationService
 {
     protected function getRules(): array
     {
+        // if complectation exists then nullable else required
         $requiredComplectationField = DB::table('complectations')->where('name', $this->inputData['complectation'])->exists() ?
             ['nullable'] :
             ['required'];
 
+        // if vin exists then nullable else required
         $requiredCarField = DB::table('cars')->where('vin', $this->inputData['vin'])->exists() ?
             ['nullable'] :
             ['required'];
@@ -27,6 +35,7 @@ class ValidationCarAttribute extends ValidationService
                 $attributeVendor = new AttributeVendor($this->inputData['vendor'], $attributeMark);
                 $attributeCountry = new AttributeCountry($this->inputData['country'], $attributeVendor);
 
+                //the complectation corresponds to the links complectation -> country
                 if ($attributeComplectation->exists() && ! $attributeCountry->exists()) {
 
                     $failedParameter = $attributeMark->exists() ?
@@ -45,6 +54,7 @@ class ValidationCarAttribute extends ValidationService
                 $attributeVendor = new AttributeVendor($this->inputData['vendor'], $attributeMark);
                 $attributeCountry = new AttributeCountry($this->inputData['country'], $attributeVendor);
 
+                //the mark corresponds to the links mark -> country
                 if ($attributeMark->exists() && ! $attributeCountry->exists()) {
 
                     $failedParameter = $attributeVendor->exists() ?
@@ -61,6 +71,7 @@ class ValidationCarAttribute extends ValidationService
                 $attributeVendor = new AttributeVendor($value);
                 $attributeCountry = new AttributeCountry($this->inputData['country'], $attributeVendor);
 
+                //the vendor corresponds to the links vendor -> country
                 if ($attributeVendor->exists() && ! $attributeCountry->exists()) {
 
                     $failedParameter = $attributeCountry->exists() ?

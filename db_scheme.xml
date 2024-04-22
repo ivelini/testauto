@@ -220,16 +220,7 @@
             <datatype>INTEGER</datatype>
             <default>NULL</default><relation table="car" row="id" />
         </row>
-        <row name="volue_int" null="0" autoincrement="0">
-            <datatype>INTEGER</datatype>
-            <default>NULL</default></row>
-        <row name="volue_text" null="1" autoincrement="0">
-            <datatype>MEDIUMTEXT</datatype>
-            <default>NULL</default></row>
-        <row name="volue_date" null="1" autoincrement="0">
-            <datatype>DATE</datatype>
-            <default>NULL</default></row>
-        <row name="volue_boolean" null="1" autoincrement="0">
+        <row name="value" null="0" autoincrement="0">
             <datatype>INTEGER</datatype>
             <default>NULL</default></row>
         <key type="PRIMARY" name="">

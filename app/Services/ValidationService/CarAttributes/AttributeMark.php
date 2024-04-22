@@ -4,7 +4,9 @@ namespace App\Services\ValidationService\CarAttributes;
 
 use App\Models\Catalog\Mark;
 
-
+/**
+ * Mark attribute
+ */
 class AttributeMark extends AttributeBuilder
 {
 

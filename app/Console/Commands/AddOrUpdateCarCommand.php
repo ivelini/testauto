@@ -4,9 +4,12 @@ namespace App\Console\Commands;
 
 use App\Actions\Catalog\CarAddOrUpdate;
 use App\DataTransfers\CarArgumentDTO;
-use App\Services\ValidationService\CarAttributes\ValidationCarAttribute;
+use App\Services\ValidationService\ValidationCarAttribute;
 use Illuminate\Console\Command;
 
+/**
+ * The command starts saving or updating the model car
+ */
 
 class AddOrUpdateCarCommand extends Command
 {
@@ -31,6 +34,7 @@ class AddOrUpdateCarCommand extends Command
     {
         $inputCar =  json_decode($this->argument('car'), ARRAY_FILTER_USE_KEY);
 
+        //Validation input string
         $validator = new ValidationCarAttribute($inputCar);
 
         if(! $validator->isValidated) {

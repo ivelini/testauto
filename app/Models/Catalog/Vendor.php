@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property integer $country_id
  *
  * @property string $name
- *
  * @property Country $country
  */
 class Vendor extends Model
@@ -37,7 +36,7 @@ class Vendor extends Model
     }
 
     /**
-     *
+     * All marks current vendor
      */
     public function marks(): HasMany
     {

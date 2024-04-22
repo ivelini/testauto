@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property integer $id
  *
  * @property string $name
- *
  * @property Collection $complectations
  */
 class Drive extends Model

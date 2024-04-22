@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @property integer $vendor_id
  *
  * @property string $name
- *
  * @property Vendor $vendor
  */
 class Mark extends Model
@@ -30,7 +29,7 @@ class Mark extends Model
     ];
 
     /**
-     * Current vendor for model
+     * Current vendor for mark auto
      */
     public function vendor(): BelongsTo
     {
@@ -38,7 +37,7 @@ class Mark extends Model
     }
 
     /**
-     * All complectations for model
+     * All complectations current model
      */
     public function complectations(): HasMany
     {
@@ -46,7 +45,7 @@ class Mark extends Model
     }
 
     /**
-     * All cars for current model auto
+     * All cars current mark auto
      */
     public function cars(): HasManyThrough
     {

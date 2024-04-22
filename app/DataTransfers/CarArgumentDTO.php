@@ -4,6 +4,9 @@ namespace App\DataTransfers;
 
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * DTO for transver validated data into CraAddOrUpdate class
+ */
 class CarArgumentDTO
 {
     public function __construct(

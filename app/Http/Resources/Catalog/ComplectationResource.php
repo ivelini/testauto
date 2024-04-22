@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Catalog;
 
-use App\Models\Catalog\Car;
+
 use App\Models\Catalog\Complectation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

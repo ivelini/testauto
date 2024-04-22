@@ -1,6 +1,6 @@
-# Тестовое задание описание на русском (README_EN google translate)
+# Description
 
-## Настройка проекта
+## settings
 ```shell
 cp .env.example .env
 ```
@@ -21,18 +21,16 @@ docker compose exec app php artisan key:generate
 docker compose exec app php artisan migrate:fresh --seed
 ```
 
-## Схема БД
+## DB Scheme
 
-Схему БД можно посмотреть на сайте https://sql.toad.cz/ скопировав содержимое xml файла db_scheme.xml
+The database schema can be viewed on the website https://sql.toad.cz/ by copying the contents of the xml file db_scheme.xml
 
 <img src="db_scheme.jpg" width="853" height="805"  alt="Схема БД"/>
 
-**Информация об авто строится по следующему приципу:**
+**Information about a car:**
 
-- **VIN** - главная характеристика авто. Разные вин, разные авто.
-- У автомобиля есть *не изменяемая* комплектация. По комплектации можно узнать модель, производителя. страну, трансмиссию, тип кузова, тип двигателя, тип привода.
-- У автомобиля есть индивидуальные аттрибуты, значение которых для каждого авто может отличаться в количественном соотношении.
-
+- **VIN** - main characteristic of the car. Different wines, different cars. The car has a *non-changeable* configuration. By configuration you can find out the model and manufacturer. country, transmission, body type, engine type, drive type.
+- A car has individual attributes, the value of which for each car may differ in quantitative terms.
 ## Консольная команда
 
 ```shell
@@ -71,30 +69,29 @@ docker compose exec app php artisan catalog:add-or-update-car-command "{\"countr
                 ]
             ]
 ```
-### Валидация и сохранение в БД
+### Validation and create or update 
 
-- **Комплектация**
-- - проверка на существование, если существует, то на принадлежность к модели.
-- - если не существует, то создание новой комплектации
-- **Модель**
-- - проверка на существование, если существует, то на принадлежность к комплектации.
-- - если не существует, то создание новой модели с привязкой к комплектации
-- **Производитель**
-- - проверка на существование, если существует, то на принадлежность к стране
-- - если не существует, то создание нового производителя
-- **Трансмиссия, тип кузова, двигатель, привод**
-- - Проверка на существование в БД и принадлежность комплектации
+- **Complectation**
+- - check for exist; if it exists, then for membership in the mark
+- - if it does not exist, then create a new configuration
+- **Mark**
+- - check for exist; if it exists, then for membership in the vendor
+- - if it does not exist, then create a new mark
+- **Vendor**
+- - check for exist; if it exists, then for membership in the country
+- - if it does not exist, then create a new vendor
+- **Transmission, body type, engine, drive**
+- - check for exist 
 - **Реальные аттрибуты**
-- - Проверка на существование в БД. Предположим, что их много, но создаются они отдельными методами.
+- - check for exist. Let's assume that there are many of them, but they are created using separate methods..
 
-После валидации всех входных данных, создаем модель если vin не найден или обновляем модель, если такой vin существует в базе.
+After validating all input data, we create a model if the vin is not found or update the model if such a vin exists in the database.
+## Cache
+The creation or updating of the cache is monitored by the car model observer. The model with all loaded relationships is cached for display on the product card page.
 
-## Кэширование
- За созданием или обновлением кэша следит обсервер модели car. Кешируется модель со всеми загруженными отношениями для вывода на странице карточки товара.
+Caching in redis by key: Model name: why we cache: model id
 
-Кэширование в redis по ключу: Название модели:для чего кешируем: id модели
-
-## GET метод получения модели
+## GET method
 ```http request
 http://127.0.0.1:8089/api/auto/:auto
 ```

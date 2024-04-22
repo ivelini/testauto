@@ -6,7 +6,9 @@ namespace App\Services\ValidationService\CarAttributes;
 use App\Models\Catalog\Country;
 use App\Models\Catalog\Vendor;
 
-
+/**
+ * Country attribute
+ */
 class AttributeCountry extends AttributeBuilder
 {
 

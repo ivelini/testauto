@@ -8,6 +8,9 @@ use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Compliance of parameters with a given configuration
+ */
 class SingleComplectationRule implements DataAwareRule, ValidationRule
 {
     protected $data = [];

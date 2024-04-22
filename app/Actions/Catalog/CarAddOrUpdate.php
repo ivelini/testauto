@@ -27,6 +27,10 @@ class CarAddOrUpdate
     )
     {}
 
+    /**
+     * inline method create or update car model
+     * @return Car|null
+     */
     public function run()
     {
         try {
@@ -75,8 +79,10 @@ class CarAddOrUpdate
                     ])
                 );
 
+                // delete all real values attribute for car
                 RealComplectValue::query()->where('car_id', $car->id)->delete();
 
+                //if real attribute not empty
                 if(! empty($this->carArgumentDTO->realAttributes)) {
 
                     $insertValues = [];
@@ -110,6 +116,9 @@ class CarAddOrUpdate
         } elseif (isset($car) && ! $car->wasRecentlyCreated) {
             $this->status = 'The car has been changed in the catalog';
         }
+
+        return $car ?? null;
+
     }
 
     private function getOnlyNotEmptyFields(array $attributes)

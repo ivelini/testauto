@@ -5,7 +5,9 @@ namespace App\Services\ValidationService\CarAttributes;
 
 use App\Models\Catalog\Vendor;
 
-
+/**
+ * Vendor attribute
+ */
 class AttributeVendor extends AttributeBuilder
 {
 

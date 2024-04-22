@@ -7,16 +7,25 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 
+/**
+ *  Check exist value for attribute
+ *  pattern decorator
+ * checks the links of all elements for compliance
+ */
 abstract class AttributeBuilder
 {
-    protected Model $model;
+    protected Model $model;         // Model current attribute
 
-    protected string $foreignKey;
+    protected string $foreignKey;   // Foreign key current attribute table
 
-    protected string $table;
+    protected string $table;        // Table current attribute
 
-    protected ?AttributeBuilder $prevBuilder;
+    protected ?AttributeBuilder $prevBuilder;   // Wrap class
 
+    /**
+     * @param string $name      validation value current attribute
+     * @param AttributeBuilder|null $builder    // Wrap class
+     */
     public function __construct(protected string $name, AttributeBuilder $builder = null)
     {
         $this->prevBuilder = $builder;
@@ -31,6 +40,10 @@ abstract class AttributeBuilder
 
     abstract protected function emptyMessage(): string;
 
+    /**
+     * builder
+     * if prevBuilder exists then prevBuilder concat join current attribute
+     */
     protected function build(): Builder
     {
         if (empty($this->prevBuilder)) {

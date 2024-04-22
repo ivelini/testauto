@@ -8,10 +8,11 @@ use Illuminate\Support\Facades\Cache;
 class CarObserver
 {
     /**
-     * Обработать событие «create/update» даже если нет изменений модели Car.
+     * Handle the "create/update" event even if there are no changes to the Car model.
      */
     public function saved(Car $car): void
     {
+        // for product card
         $car->load([
             'color',
             'complectation.mark.vendor.country',
@@ -25,10 +26,11 @@ class CarObserver
     }
 
     /**
-     * Обработать событие «deleted» модели Car.
+     * Handle the “deleted” event of the Car model.
      */
     public function deleted(Car $car): void
     {
+        //delete cache for product card
         $car->deleteCache(CacheTypeEnum::page);
     }
 }

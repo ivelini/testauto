@@ -11,13 +11,12 @@ use Database\Seeders\Catalog\DriveSeeder;
 use Database\Seeders\Catalog\EngineSeeder;
 use Database\Seeders\Catalog\RealAttributeSeeder;
 use Database\Seeders\Catalog\TransmissionSeeder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 class EntityCarTest extends TestCase
 {
-    use RefreshDatabase;
 
     protected CarArgumentDTO $carArgumentDTO;
 
@@ -96,6 +95,9 @@ class EntityCarTest extends TestCase
 
     public function testCreateCar(): Car
     {
+        Artisan::call('migrate:fresh');
+        Cache::clear();
+
         $this->seed([
             TransmissionSeeder::class,
             BodySeeder::class,
@@ -103,8 +105,6 @@ class EntityCarTest extends TestCase
             DriveSeeder::class,
             RealAttributeSeeder::class
         ]);
-
-        Cache::clear();
 
         (new CarAddOrUpdate($this->carArgumentDTO))->run();
 
@@ -134,15 +134,109 @@ class EntityCarTest extends TestCase
     /**
      * @depends testCreateCar
      */
-    public function testCacheAfterCreateCar(Car $car)
+    public function testCacheAfterCreateCar(Car $createdCar)
     {
         /** @var Car $cachedCar */
-        $cachedCar = Cache::get((new \ReflectionClass($car))->getShortName() . ':' . CacheTypeEnum::page->name . ':' . $car->id);
+        $cachedCar = Cache::get((new \ReflectionClass($createdCar))->getShortName() . ':' . CacheTypeEnum::page->name . ':' . $createdCar->id);
 
-
-        $this->assertTrue($cachedCar->id == $car->id);
+        $this->assertTrue($cachedCar->id == $createdCar->id);
         $this->assertTrue(array_key_exists('realAttributes', $cachedCar->getRelations()));
+
+        return $cachedCar;
     }
 
+    /**
+     * @dataProvider inputProvider
+     */
+    public function testUpdateCar($iteration, $country,$vendor,$mark,$complectation,$color,$vin,$price,
+                                  $year,$bodyType,$engine, $drive,$transmission,$volumeEngine,$power,
+                                  $speed,$realAttributes)
+    {
 
+        $this->carArgumentDTO = new CarArgumentDTO(
+            $country,
+            $vendor,
+            $mark,
+            $complectation,
+            $color,
+            $vin,
+            $price,
+            $year,
+            $realAttributes,
+            $bodyType,
+            $engine,
+            $drive,
+            $transmission,
+            $volumeEngine,
+            $power,
+            $speed,
+        );
+
+        $updatedCar = (new CarAddOrUpdate($this->carArgumentDTO))->run();
+
+        if($iteration == 1 ) {
+            $cachedCar = Cache::get((new \ReflectionClass($updatedCar))->getShortName() . ':' . CacheTypeEnum::page->name . ':' . $updatedCar->id);
+            $this->assertTrue(count($updatedCar->getChanges()) == 3);
+            $this->assertTrue($updatedCar->realAttributes()->count() == 0);
+            $this->assertTrue($cachedCar->color->name == 'New Баклажан');
+            $this->assertTrue(count($cachedCar->realAttributes) == 0);
+        }
+
+        if($iteration == 2) {
+            $this->assertTrue($updatedCar == null);
+            $this->assertTrue(count(Car::find(1)->realAttributes) == 0);
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public static function inputProvider()
+    {
+        $data = [
+            [
+                'iteration' => 1,
+                'country' => 'Россия',
+                'vendor' => 'Авто ТАЗ',
+                'mark' => 'Веста',
+                'complectation' => 'Супер +',
+                'color' => 'New Баклажан',  //change
+                'vin' => '565HSJIS497H3',
+                'price' => '100510',    //change
+                'year' => '2023',       //change
+                'body_type' => 'Седан',
+                'engine' => 'Бензин',
+                'drive' => 'Передний',
+                'transmission' => 'Механика',
+                'volume_engine' => '1600',
+                'power' => '3500',
+                'speed' => '210',
+                'real_attributes' => null //change
+            ],
+            [
+                'iteration' => 2,
+                'country' => 'Россия',
+                'vendor' => 'Авто ТАЗ',
+                'mark' => 'Веста',
+                'complectation' => 'Супер +',
+                'color' => 'Баклажан',
+                'vin' => '565HSJIS497H3',
+                'price' => '100500',
+                'year' => '2024',
+                'body_type' => 'Седан',
+                'engine' => 'Бензин',
+                'drive' => 'Передний не из справочника', //change
+                'transmission' => 'Механика',
+                'volume_engine' => '1600',
+                'power' => '3500',
+                'speed' => '210',
+                'real_attributes' =>  [     //change
+                    'name' => 'Противоугонная система',
+                    'values' => ['Г']
+                ],
+            ],
+        ];
+
+        return $data;
+    }
 }

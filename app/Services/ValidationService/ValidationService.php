@@ -7,14 +7,18 @@ use Illuminate\Validation\Validator as ValidatorObject;
 use Illuminate\Support\MessageBag;
 
 /**
- *  Validation service
+ *  Validation service .Abstract class on the basis of which we create the class necessary for verification.
+ *
  */
 abstract class ValidationService
 {
-    public bool $isValidated = false;
-    protected ValidatorObject $validator;
-    public MessageBag $errors;
+    public bool $isValidated = false;       // validation status
+    protected ValidatorObject $validator;   // object validator
+    public MessageBag $errors;              // messages
 
+    /**
+     * @param array|null $inputData validation array
+     */
     public function __construct(protected ?array $inputData)
     {
         $this->errors = new MessageBag();
@@ -34,8 +38,17 @@ abstract class ValidationService
         }
     }
 
+    /**
+     * Validation rules
+     * @return array
+     */
     abstract protected function getRules(): array;
 
+    /**
+     * If the check is passed, we return the verified data
+     * @return array|null
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function validated(): ?array
     {
         return $this->isValidated ?
